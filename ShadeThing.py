@@ -2,7 +2,10 @@
 import random
 
 class ShadeThing:
-	def __init__(self, value_limits, value_steps = {"min": 0, "max":1}):
+	def __init__(self, value_limits, value_steps = None):
+		if value_steps == None:
+			value_steps = {"min": 0, "max":1}
+
 		self.value = value_limits["min"]
 		self.value_limits = value_limits
 		self.value_steps = value_steps
