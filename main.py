@@ -1,8 +1,8 @@
 #!/bin/python3
 import dis
 from ShadeThing import ShadeThing
+import ConsoleUtil
 
-esc = "\u001B"
 
 def gradientalColorThing():
 	global shadeThing
@@ -19,12 +19,12 @@ def gradientalColorThing():
 
 
 if __name__ == "__main__":
-	print(f"{esc}[48;2;0;0;0m")
-	print(f"{esc}[38;2;255;255;255m")
+	ConsoleUtil.applyBackgroundColor(0, 0, 0)
+	ConsoleUtil.applyForegroundColor(255, 255, 255)
 	dis_instructions = dis.get_instructions(dis.get_instructions)
 	for dis_instruction in dis_instructions:	
 		rgb = gradientalColorThing()	
-		print(end = f"{esc}[38;2;{rgb['red']};{rgb['green']};{rgb['blue']}m")
+		ConsoleUtil.applyForegroundColor(rgb["red"], rgb["green"], rgb["blue"])
 		print(f"""{
 			dis_instruction.opname
 		} ({dis_instruction.opcode}{
