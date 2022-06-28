@@ -3,7 +3,6 @@ import dis
 from ShadeThing import ShadeThing
 import ConsoleUtil
 
-
 def gradientalColorThing():
 	global shadeThing
 	try:
@@ -17,21 +16,31 @@ def gradientalColorThing():
 	return {x: shadeThing[x].iterate() for x in shadeThing.keys()}
 
 
-
-if __name__ == "__main__":
+def inspect(functions):
 	ConsoleUtil.applyBackgroundColor(0, 0, 0)
 	ConsoleUtil.applyForegroundColor(255, 255, 255)
-	dis_instructions = dis.get_instructions(dis.get_instructions)
-	for dis_instruction in dis_instructions:	
-		rgb = gradientalColorThing()	
+	for item in functions:
+		dis_instructions = dis.get_instructions(item)
+		rgb = gradientalColorThing()
 		ConsoleUtil.applyForegroundColor(rgb["red"], rgb["green"], rgb["blue"])
-		print(f"""{
-			dis_instruction.opname
-		} ({dis_instruction.opcode}{
-			(
-				', ' + str(dis_instruction.argval)
-			if dis_instruction.argval != None else
-				''
-			)
-		})""")
+		print(f"{item}")
+		for dis_instruction in dis_instructions:	
+			rgb = gradientalColorThing()
+			ConsoleUtil.applyForegroundColor(rgb["red"], rgb["green"], rgb["blue"])
+			print(f"""\t{
+				dis_instruction.opname
+			} ({
+				(
+					str(dis_instruction.argval)
+				if dis_instruction.argval != None else
+					''
+				)
+			})""")
+		print()
 	ConsoleUtil.applyDefaultColors()
+
+if __name__ == "__main__":
+	inspect([
+		dis.get_instructions, 
+		gradientalColorThing,
+	])
